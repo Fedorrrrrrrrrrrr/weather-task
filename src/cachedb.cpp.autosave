@@ -1,0 +1,71 @@
+#include "cachedb.h"
+
+CacheDb::CacheDb(QObject* parent): QObject(parent)
+{
+
+}
+
+void CacheDb::openDb(){
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setHostName("testHost");
+    db.setDatabaseName("my_db.sqlite");
+    db.setUserName("testUser");
+    db.setPassword("testPassword");
+
+    if (!db.open()) {
+       qDebug() << "Error creating database!";
+       }
+}
+void CacheDb::creatingTables(){
+    QSqlQuery creatingTableCitiesQuery;
+    QString strcreatingTableCitiesQuery = "CREATE TABLE selected_cities ("
+            "id VARCHAR(255) PRIMARY KEY NOT NULL, "
+            "address VARCHAR(255), "
+            "locaklity VARCHAR(255), "
+            "administrativeArea VARCHAR(255), "
+            "longitude double, "
+            "latitude double, "
+            ");";
+    bool b = creatingTableCitiesQuery.exec(strcreatingTableCitiesQuery);
+    if (!b) {
+        qDebug() << "Error creating cities table!";
+    }
+    QSqlQuery creatingTableWeatherQuery;
+    QString strQuery = "CREATE TABLE weather ("
+            "id integer PRIMARY KEY NOT NULL, "
+            "icon VARCHAR(255), "
+            "city VARCHAR(255), "
+            "temperature double, "
+            "pressure integer, "
+            "time integer, "
+            "humidity integer, "
+            "city_id integer, "
+            "FOREIGN KEY (city_id)  REFERENCES selected_cities (id)"
+            ");";
+
+    bool b2 = creatingTableWeatherQuery.exec(strQuery);
+    if (!b2) {
+        qDebug() << "Error creating table!";
+    }
+}
+
+void insertCity(LocalityStruct city){
+    
+    QSqlQuery a_query;
+       // DDL query"locaklity VARCHAR(255), "
+   
+        
+    QString str_insert = "INSERT INTO my_table(id, address, locaklity, administrativeArea, longitude, latitude) "
+               "VALUES (%1, '%2', %3, %4, %5, %6);";
+    QString str = str_insert.arg(city.m_locaklity+";"+city.m_longitude+";"+city.m_latitude)
+           .arg(city.m_adress)
+            .arg(city.m_administrativeArea)
+            .arg(QScity.m_longitude)
+            .arg()
+           .arg();
+    bool b = a_query.exec(str);
+    if (!b) {
+        qDebug() << "Error insert data!";
+    }
+}
+

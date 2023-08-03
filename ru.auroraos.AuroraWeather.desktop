@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+X-Nemo-Application-Type=silica-qt5
+Icon=ru.auroraos.AuroraWeather
+Exec=/usr/bin/ru.auroraos.AuroraWeather
+Name=WeatherAurora
+Name[ru]=Погода Аврора
+
+[X-Application]
+Permissions=Internet;Location;RemovableMedia;UserDirs
+OrganizationName=ru.auroraos
+ApplicationName=AuroraWeather
+ExecDBus=/usr/bin/ru.auroraos.AuroraWeather
